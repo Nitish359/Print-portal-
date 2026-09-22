@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Print Portal</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f0f2f5; padding: 20px; }
+        .header { text-align: center; background: #1e293b; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .upload-box { border: 2px dashed #0284c7; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; background: #f0f9ff; }
+        .upload-box input { display: none; }
+        .btn { background: #0284c7; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .btn-print { background: #16a34a; }
+        #preview-area { margin-top: 20px; text-align: center; display: none; }
+        #preview-area iframe, #preview-area img { max-width: 100%; height: 450px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Digital Print Service Portal</h1>
+        <p>Aadhaar, PAN Card, Marksheet aur Documents Direct Print Zone</p>
+    </div>
+
+    <div class="container">
+        <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+            <h3>Click karke File Upload karein (PDF / Image)</h3>
+            <p>PDF, PNG, JPG Files Support Karte Hain</p>
+            <input type="file" id="fileInput" accept="application/pdf,image/*" onchange="previewFile()">
+        </div>
+
+        <div id="preview-area">
+            <h3>Print Preview:</h3>
+            <div id="fileViewer" style="margin: 15px 0;"></div>
+            <button class="btn btn-print" onclick="window.print()">Print Nikalein</button>
+        </div>
+    </div>
+
+    <script>
+        function previewFile() {
+            const input = document.getElementById('fileInput');
+            const viewer = document.getElementById('fileViewer');
+            const area = document.getElementById('preview-area');
+            const file = input.files[0];
+
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+                area.style.display = 'block';
+
+                if (file.type === 'application/pdf') {
+                    viewer.innerHTML = `<iframe src="${fileURL}"></iframe>`;
+                } else {
+                    viewer.innerHTML = `<img src="${fileURL}" />`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
